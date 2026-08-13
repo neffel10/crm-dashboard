@@ -28,7 +28,7 @@ export default async function ClientsPage({ searchParams }: PageProps) {
         {/* Formulario para Agregar Nuevo Cliente */}
         <section className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm h-fit">
           <h2 className="text-lg font-bold mb-4 text-slate-900">Add New Client</h2>
-          <form action={createClient} className="flex flex-col gap-4">
+          <form action={async (formData) => { 'use server'; await createClient(formData); }} className="flex flex-col gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 mb-1">Full Name *</label>
               <input

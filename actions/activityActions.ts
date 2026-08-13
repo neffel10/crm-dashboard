@@ -7,12 +7,9 @@ import { revalidatePath } from 'next/cache';
 export async function getActivitiesByDeal(dealId: string) {
   try {
     const activities = await prisma.activity.findMany({
-      where: { dealId },
-      orderBy: { createdAt: 'desc' },
-      include: {
-        user: true, // Incluye el usuario que registró la actividad si aplica
-      },
-    });
+  where: { dealId },
+  orderBy: { createdAt: 'desc' },
+});
     return { success: true, data: activities };
   } catch (error) {
     console.error('Error fetching activities:', error);
