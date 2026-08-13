@@ -80,48 +80,56 @@ export default async function ClientsPage({ searchParams }: PageProps) {
           </form>
         </section>
 
-        {/* Tabla de Lista de Clientes */}
-        <section className="lg:col-span-2 bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
-          <table className="w-full text-left border-collapse">
-            <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-xs text-slate-600 font-bold uppercase tracking-wider">
-                <th className="p-4">Name & Company</th>
-                <th className="p-4">Contact Information</th>
-                <th className="p-4 text-center">Deals</th>
-                <th className="p-4 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 text-sm">
-              {clients.length === 0 ? (
-                <tr>
-                  <td colSpan={4} className="p-8 text-center text-slate-500 font-medium">
-                    {searchQuery ? `No clients match "${searchQuery}"` : 'No clients found in PostgreSQL database.'}
-                  </td>
+        {/* Tabla de Lista de Clientes - Adaptada para Móvil */}
+        <section className="lg:col-span-2 bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+          <div className="p-4 border-b border-slate-100">
+             <h2 className="text-lg font-bold text-slate-900">Current Clients</h2>
+             <p className="text-xs text-slate-500">A responsive list of agency leads and partners.</p>
+          </div>
+
+          {/* 👇 ESTE DIV ES LA CLAVE PARA EL RESPONSIVE 👇 */}
+          <div className="overflow-x-auto w-full rounded-xl border border-slate-200 bg-white shadow-sm">
+  <table className="w-full text-left border-collapse min-w-[600px]">
+              <thead>
+                <tr className="bg-slate-50 border-b border-slate-200 text-xs text-slate-600 font-bold uppercase tracking-wider">
+                  <th className="p-4 min-w-[150px]">Name & Company</th>
+                  <th className="p-4 min-w-[200px]">Contact Information</th>
+                  <th className="p-4 text-center">Deals</th>
+                  <th className="p-4 text-center">Actions</th>
                 </tr>
-              ) : (
-                clients.map((client) => (
-                  <tr key={client.id} className="hover:bg-slate-50/70 transition-colors">
-                    <td className="p-4">
-                      <div className="font-bold text-slate-900">{client.name}</div>
-                      <div className="text-xs font-medium text-slate-500">{client.company || 'N/A'}</div>
-                    </td>
-                    <td className="p-4">
-                      <div className="text-slate-800 font-medium">{client.email}</div>
-                      <div className="text-xs text-slate-500">{client.phone || 'No phone'}</div>
-                    </td>
-                    <td className="p-4 text-center">
-                      <span className="bg-blue-50 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-full border border-blue-100">
-                        {client.deals.length} deals
-                      </span>
-                    </td>
-                    <td className="p-4 text-center">
-                      <ClientActionsMenu client={client} />
+              </thead>
+              <tbody className="divide-y divide-slate-100 text-sm">
+                {clients.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="p-8 text-center text-slate-500 font-medium">
+                      {searchQuery ? `No clients match "${searchQuery}"` : 'No clients found in PostgreSQL database.'}
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  clients.map((client) => (
+                    <tr key={client.id} className="hover:bg-slate-50/70 transition-colors">
+                      <td className="p-4">
+                        <div className="font-bold text-slate-900 whitespace-nowrap">{client.name}</div>
+                        <div className="text-xs font-medium text-slate-500 whitespace-nowrap">{client.company || 'N/A'}</div>
+                      </td>
+                      <td className="p-4">
+                        <div className="text-slate-800 font-medium">{client.email}</div>
+                        <div className="text-xs text-slate-500">{client.phone || 'No phone'}</div>
+                      </td>
+                      <td className="p-4 text-center">
+                        <span className="bg-blue-50 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-full border border-blue-100">
+                          {client.deals.length} deals
+                        </span>
+                      </td>
+                      <td className="p-4 text-center">
+                        <ClientActionsMenu client={client} />
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         </section>
       </div>
     </div>
